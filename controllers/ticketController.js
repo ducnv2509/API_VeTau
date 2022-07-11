@@ -89,7 +89,7 @@ export async function bookTicket(req, res) {
     let { trainId, trainCode, bookingCode, tickets} = req.body;
     tickets.forEach(ticket => {
         let {Id, quantity, unitPrice} = ticket;
-        
+
     });
 }
 
@@ -141,21 +141,21 @@ export async function bookTicket(req, res) {
 //     })
 // }
 
-// export async function getAllGa() {
-//     const urlGa = "https://k.vnticketonline.vn/api/GTGV/LoadDmGa";
-//     return await fetch(urlGa, {
-//         method: 'GET',
-//         headers: { 'Content-Type': 'application/json' }
-//     }).then((response) => response.json())
-//         .then(json => {
-//             let ret = [];
-//             json.forEach(ga => {
-//                 let { Id, TenGa, MaGa } = ga
-//                 ret.push({ Id, TenGa, MaGa })
-//             })
-//             return ret
-//         })
-// }
+export async function getAllGa() {
+    const urlGa = "https://k.vnticketonline.vn/api/GTGV/LoadDmGa";
+    return await fetch(urlGa, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    }).then((response) => response.json())
+        .then(json => {
+            let ret = [];
+            json.forEach(ga => {
+                let { Id, TenGa, MaGa } = ga
+                ret.push({ Id, TenGa, MaGa })
+            })
+            return ret
+        })
+}
 
 function generate_string(n = 5) {
     var text = "";

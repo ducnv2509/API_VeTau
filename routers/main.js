@@ -1,5 +1,5 @@
 import express from 'express';
-import {TicketByTrain, getInforTicket, bookTicket } from '../controllers/ticketController.js';
+import {TicketByTrain, getInforTicket, bookTicket, getAllGa } from '../controllers/ticketController.js';
 
 
 // app.get('/api/getTau', async (req, res) => {
@@ -14,14 +14,16 @@ import {TicketByTrain, getInforTicket, bookTicket } from '../controllers/ticketC
 //     res.status(200).send(response);
 // })
 
-// app.get('/api/getLocationGa', async (req, res) => {
-//     let response = await getAllGa();
-//     res.status(200).send(response);
-// })
+
 
 
 
 const router = express.Router();
+
+router.get('/api/getLocationGa', async (req, res) => {
+    let response = await getAllGa();
+    res.status(200).send(response);
+})
 
 router.get('/getAllTau/', async (req, res) => {
     let { from, to, departureDate, arrivalDate, isOneWay, code } = req.query;
