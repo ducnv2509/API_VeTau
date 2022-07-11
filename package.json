@@ -12,8 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "app-root-path": "^3.0.0",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "joi": "^17.6.0",
+    "mongoose": "^6.4.3",
     "node-fetch": "^3.2.6",
     "winston": "^3.8.1",
     "winston-daily-rotate-file": "^4.7.1"

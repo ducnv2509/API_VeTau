@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/', mainRoutes);
-
+// app.use()
 
 // app.post('/api/ticket/', async (req, res) => {
 //     let { from, to, departureDate, arrivalDate, isOneWay, code } = req.body;
