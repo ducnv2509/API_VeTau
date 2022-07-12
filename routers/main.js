@@ -6,7 +6,7 @@ import {TicketByTrain, getInforTicket, bookTicket, getAllGa } from '../controlle
 
 const router = express.Router();
 
-router.get('/api/getLocationGa', async (req, res) => {
+router.get('/getLocationGa', async (req, res) => {
     let response = await getAllGa();
     res.status(200).send(response);
 })
