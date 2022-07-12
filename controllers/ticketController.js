@@ -14,7 +14,7 @@ export async function getInforTicket(from, to, departureDate, arrivalDate, isOne
         2: to,
         3: departureDate,
         4: arrivalDate,
-        5: isOneWay,
+        5: true,
         6: code
     };
     const body = JSON.stringify(objTicket);
