@@ -3,43 +3,44 @@ mongoose.Promise = global.Promise;
 
 
 const Insurance = new mongoose.Schema({
-    idTicket: {
+    trainID: {
         type: Number,
         required: true,
     },
-    DMTauID: {
-        type: Number,
-        required: true,
-    },
-    LoaiCho: {
+    trainCode: {
         type: String,
         required: true,
     },
-    TenLoaiCho: {
-        type: String,
-        required: true,
-    },
-    GiaVe: {
-        type: Number,
-        required: true,
-    },
-    status: {
-        type: Boolean,
-        default: true,
-        required: true,
-    },
-    BookingCode: {
-        type: String,
-        required: true,
-    },
-    Code: {
+    bookingCode: {
         type: String,
         required: true,
     },
     Total: {
         type: Number,
         required: true,
-    }
+    },
+    TotalBH: {
+        type: Number,
+        required: true,
+    },
+    codeBH: {
+        type: String,
+        required: true,
+    },
+    tickets: [{
+        Id: {
+            type: Number,
+            required: true,
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        },
+        unitPrice: {
+            type: String,
+            required: true,
+        }
+    }],
 
 })
 

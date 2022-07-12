@@ -3,50 +3,46 @@ mongoose.Promise = global.Promise;
 
 
 const BookTicket = new mongoose.Schema({
-    idTicket: {
-        type: Number,
-        required: true,
-    },
-    DMTauID: {
-        type: Number,
-        required: true,
-    },
-    LoaiCho: {
+    trainID: {
         type: String,
         required: true,
     },
-    TenLoaiCho: {
+    trainCode: {
         type: String,
         required: true,
     },
-    GiaVe: {
-        type: Number,
-        required: true,
-    },
-    Thue: {
-        type: Number,
-        required: true,
-    },
-    PhiTra: {
-        type: Number,
-        required: true,
-    },
-    BaoHiem: {
-        type: Number,
-        required: true,
-    },
-    Chos: {
-        type: Number,
-        required: true,
-    },
-    BookingCode: {
+    bookingCode: {
         type: String,
         required: true,
     },
     Total: {
         type: Number,
+        required: false,
+    },
+    TotalBH: {
+        type: Number,
         required: true,
-    }
+    },
+    codeBH: {
+        type: String,
+        required: true,
+    },
+    tickets: [
+        {
+            Id: {
+                type: Number,
+                required: true,
+            },
+            quantity: {
+                type: Number,
+                required: true,
+            },
+            unitPrice: {
+                type: String,
+                required: true,
+            }
+        }
+    ]
 
 })
 
