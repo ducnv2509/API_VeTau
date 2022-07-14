@@ -44,7 +44,7 @@ export async function getInforTicket(from, to, departureDate, arrivalDate, isOne
             })
             data.push({ Id, MacTau, NgayDi, NgayDen, GioDi, GioDen, giaVes, toaXes, TongChoCon, TongChoLock });
             const post = new trainTickets({
-                Id: Id,
+                _id: Id,
                 MacTau: MacTau,
                 NgayDi: NgayDi,
                 NgayDen: NgayDen,
