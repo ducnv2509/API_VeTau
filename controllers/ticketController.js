@@ -83,6 +83,7 @@ export function TicketByTrain(req, res) {
         })
 }
 export function bookTicket(req, res) {
+    console.log('Called Book ticket with', req.body)
     let { trainID, trainCode, tickets } = req.body;
     tickets.forEach(ticket => {
         let { Id, quantity, unitPrice } = ticket;
@@ -119,11 +120,18 @@ export function bookTicket(req, res) {
                 ],
             Total: totalPrice,
         })
-        postBook.save();
-        postInsurance.save();
-        res.status(200).json({
-            postBook
-        })
+        try {
+            postBook.save();
+            postInsurance.save();
+            console.log('Save successful')
+            res.status(200).json({
+                postBook
+            })
+        } catch(error) {
+            console.log('Save DB failed')
+            throw error
+        }
+        
     })
 
 
