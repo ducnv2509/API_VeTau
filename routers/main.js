@@ -11,8 +11,8 @@ router.get('/getLocationGa', async (req, res) => {
     res.status(200).send(response);
 })
 
-router.post('/getAllTau/', async (req, res) => {
-    let { from, to, departureDate, arrivalDate, isOneWay, code } = req.body;
+router.get('/getAllTau/', async (req, res) => {
+    let { from, to, departureDate, arrivalDate, isOneWay, code } = req.query;
     let response = await getInforTicket(from, to, departureDate, arrivalDate, isOneWay, code);
     res.status(200).send(response);
 })
