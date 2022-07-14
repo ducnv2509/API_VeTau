@@ -93,29 +93,30 @@ export function bookTicket(req, res) {
         let listTick = [];
         let postBook = null;
         let postInsurance = null;
+        let totalPrice = null;
         tickets.forEach(ticket => {
             let { Id, quantity, unitPrice } = ticket;
-            let totalPrice = quantity * unitPrice
+            totalPrice += quantity * unitPrice
             console.log(">>>>>>>>>>>>>>>>>", totalPrice)
             listTick.push({ Id, quantity, unitPrice })
-            postBook = new BookTicket({
-                trainID: trainID,
-                trainCode: trainCode,
-                codeBH: generate_string(),
-                TotalBH: 5000,
-                bookingCode: generate_string(),
-                tickets: listTick,
-                Total: totalPrice,
-            })
-            postInsurance = new Insurance({
-                trainID: Id,
-                trainCode: trainCode,
-                codeBH: generate_string(),
-                TotalBH: 5000,
-                bookingCode: generate_string(),
-                tickets: listTick,
-                Total: totalPrice,
-            })
+        })
+        postBook = new BookTicket({
+            trainID: trainID,
+            trainCode: trainCode,
+            codeBH: generate_string(),
+            TotalBH: 5000,
+            bookingCode: generate_string(),
+            tickets: listTick,
+            Total: totalPrice,
+        })
+        postInsurance = new Insurance({
+            trainID: trainID,
+            trainCode: trainCode,
+            codeBH: generate_string(),
+            TotalBH: 5000,
+            bookingCode: generate_string(),
+            tickets: listTick,
+            Total: totalPrice,
         })
         console.log("++++++++++++", postBook.tickets)
 
