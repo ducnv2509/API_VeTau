@@ -27,46 +27,46 @@ export async function getInforTicket(from, to, departureDate, arrivalDate, isOne
     }).then(response =>
         response.json()
     )
-    .then(json => {
-        console.log(json);
-        let { TauDis } = json;
-        let { BookingCode } = json;
-        let data = [
-        ];
-        console.log("0000000000" , TauDis);
-        TauDis.forEach(taudi => {
-            let { Id, MacTau, NgayDi, NgayDen, GioDi, GioDen, BangGiaVes, ToaXes, TongChoCon, TongChoLock } = taudi;
-            let giaVes = [];
-            BangGiaVes.forEach(banggiave => {
-                let { Id, LoaiCho, TenLoaiCho, GiaVe, Chos, Thue, PhiTra, BaoHiem } = banggiave;
-                giaVes.push({ Id, LoaiCho, TenLoaiCho, GiaVe, Chos, Thue, PhiTra, BaoHiem });
-            })
-            let toaXes = [];
-            ToaXes.forEach(ToaXe => {
-                let { Id, ToaSo, ToaSoSX, ToaXeDienGiai, ToaXeStatus, NhomChoWeb } = ToaXe;
-                toaXes.push({ Id, ToaSo, ToaSoSX, ToaXeDienGiai, ToaXeStatus, NhomChoWeb });
-            })
-            data.push({ Id, MacTau, NgayDi, NgayDen, GioDi, GioDen, giaVes, toaXes, TongChoCon, TongChoLock });
-            const post = new trainTickets({
-                Id: Id,
-                MacTau: MacTau,
-                NgayDi: NgayDi,
-                NgayDen: NgayDen,
-                GioDi: GioDi,
-                GioDen: GioDen,
-                GiaVes: giaVes,
-                toaXes: toaXes,
-                TongChoCon: TongChoCon,
-                TongChoLock: TongChoLock
+        .then(json => {
+            console.log(json);
+            let { TauDis } = json;
+            let { BookingCode } = json;
+            let data = [
+            ];
+            console.log("0000000000", TauDis);
+            TauDis.forEach(taudi => {
+                let { Id, MacTau, NgayDi, NgayDen, GioDi, GioDen, BangGiaVes, ToaXes, TongChoCon, TongChoLock } = taudi;
+                let giaVes = [];
+                BangGiaVes.forEach(banggiave => {
+                    let { Id, LoaiCho, TenLoaiCho, GiaVe, Chos, Thue, PhiTra, BaoHiem } = banggiave;
+                    giaVes.push({ Id, LoaiCho, TenLoaiCho, GiaVe, Chos, Thue, PhiTra, BaoHiem });
+                })
+                let toaXes = [];
+                ToaXes.forEach(ToaXe => {
+                    let { Id, ToaSo, ToaSoSX, ToaXeDienGiai, ToaXeStatus, NhomChoWeb } = ToaXe;
+                    toaXes.push({ Id, ToaSo, ToaSoSX, ToaXeDienGiai, ToaXeStatus, NhomChoWeb });
+                })
+                data.push({ Id, MacTau, NgayDi, NgayDen, GioDi, GioDen, giaVes, toaXes, TongChoCon, TongChoLock });
+                const post = new trainTickets({
+                    Id: Id,
+                    MacTau: MacTau,
+                    NgayDi: NgayDi,
+                    NgayDen: NgayDen,
+                    GioDi: GioDi,
+                    GioDen: GioDen,
+                    GiaVes: giaVes,
+                    toaXes: toaXes,
+                    TongChoCon: TongChoCon,
+                    TongChoLock: TongChoLock
+                });
+                post.save();
             });
-            post.save();
+            let ret = {
+                data,
+                BookingCode,
+            };
+            return ret;
         });
-        let ret = {
-            data,
-            BookingCode,
-        };
-        return ret;
-    });
 }
 
 export function TicketByTrain(req, res) {
@@ -95,8 +95,8 @@ export function bookTicket(req, res) {
         let postInsurance = null;
         tickets.forEach(ticket => {
             let { Id, quantity, unitPrice } = ticket;
-            console.log(">>>>>>>>>>>>>>>>>", ticket)
             let totalPrice = quantity * unitPrice
+            console.log(">>>>>>>>>>>>>>>>>", totalPrice)
             listTick.push({ Id, quantity, unitPrice })
             postBook = new BookTicket({
                 trainID: trainID,
