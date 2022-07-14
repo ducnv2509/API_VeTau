@@ -3,7 +3,7 @@ mongoose.Promise = global.Promise;
 
 
 const trainTickets = new mongoose.Schema({
-    _id: {
+    Id: {
         type: Number,
         required: true,
     },

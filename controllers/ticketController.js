@@ -8,28 +8,32 @@ import Insurance from '../models/insurance.js'
 doenvt.config();
 
 const urlTicket = "https://dsvn.vn/api/banveweb/SearchTauByGaDiGaDenNgayXP"
+
 export async function getInforTicket(from, to, departureDate, arrivalDate, isOneWay, code) {
     const objTicket = {
         1: from,
         2: to,
         3: departureDate,
         4: arrivalDate,
-        5: isOneWay,
+        5: true,
         6: code
     };
     const body = JSON.stringify(objTicket);
-    // myLogger.info(body);
+    console.log("aasasdasd", body);
     return await fetch(urlTicket, {
         method: 'POST',
         body,
         headers: { 'Content-Type': 'application/json' }
     }).then(response =>
         response.json()
-    ).then(json => {
+    )
+    .then(json => {
+        console.log(json);
         let { TauDis } = json;
         let { BookingCode } = json;
         let data = [
         ];
+        console.log("0000000000" , TauDis);
         TauDis.forEach(taudi => {
             let { Id, MacTau, NgayDi, NgayDen, GioDi, GioDen, BangGiaVes, ToaXes, TongChoCon, TongChoLock } = taudi;
             let giaVes = [];
@@ -44,7 +48,7 @@ export async function getInforTicket(from, to, departureDate, arrivalDate, isOne
             })
             data.push({ Id, MacTau, NgayDi, NgayDen, GioDi, GioDen, giaVes, toaXes, TongChoCon, TongChoLock });
             const post = new trainTickets({
-                _id: Id,
+                Id: Id,
                 MacTau: MacTau,
                 NgayDi: NgayDi,
                 NgayDen: NgayDen,
@@ -57,7 +61,6 @@ export async function getInforTicket(from, to, departureDate, arrivalDate, isOne
             });
             post.save();
         });
-
         let ret = {
             data,
             BookingCode,
@@ -83,58 +86,49 @@ export function TicketByTrain(req, res) {
         })
 }
 export function bookTicket(req, res) {
-    console.log('Called Book ticket with', req.body)
+
     let { trainID, trainCode, tickets } = req.body;
-    tickets.forEach(ticket => {
-        let { Id, quantity, unitPrice } = ticket;
-        let totalPrice = quantity * unitPrice
-        const postBook = new BookTicket({
-            trainID: trainID,
-            trainCode: trainCode,
-            codeBH: generate_string(),
-            TotalBH: 5000,
-            bookingCode: generate_string(),
-            tickets:
-                [
-                    {
-                        Id: Id,
-                        quantity: quantity,
-                        unitPrice: unitPrice
-                    }
-                ],
-            Total: totalPrice,
-        })
-        const postInsurance = new Insurance({
-            trainID: Id,
-            trainCode: trainCode,
-            codeBH: generate_string(),
-            TotalBH: 5000,
-            bookingCode: generate_string(),
-            tickets:
-                [
-                    {
-                        Id: Id,
-                        quantity: quantity,
-                        unitPrice: unitPrice
-                    }
-                ],
-            Total: totalPrice,
-        })
-        try {
-            postBook.save();
-            postInsurance.save();
-            console.log('Save successful')
-            res.status(200).json({
-                postBook
+    console.log("----------------------", tickets)
+    try {
+        let listTick = [];
+        let postBook = null;
+        let postInsurance = null;
+        tickets.forEach(ticket => {
+            let { Id, quantity, unitPrice } = ticket;
+            console.log(">>>>>>>>>>>>>>>>>", ticket)
+            let totalPrice = quantity * unitPrice
+            listTick.push({ Id, quantity, unitPrice })
+            postBook = new BookTicket({
+                trainID: trainID,
+                trainCode: trainCode,
+                codeBH: generate_string(),
+                TotalBH: 5000,
+                bookingCode: generate_string(),
+                tickets: listTick,
+                Total: totalPrice,
             })
-        } catch(error) {
-            console.log('Save DB failed')
-            throw error
-        }
-        
-    })
+            postInsurance = new Insurance({
+                trainID: Id,
+                trainCode: trainCode,
+                codeBH: generate_string(),
+                TotalBH: 5000,
+                bookingCode: generate_string(),
+                tickets: listTick,
+                Total: totalPrice,
+            })
+        })
+        console.log("++++++++++++", postBook.tickets)
 
-
+        postBook.save();
+        postInsurance.save();
+        res.status(200).send({
+            postBook
+        })
+    } catch (error) {
+        res.status(400).send({
+            errorDescription: error.message,
+        })
+    }
 
 }
 

@@ -12,7 +12,7 @@ router.get('/getLocationGa', async (req, res) => {
 })
 
 router.get('/getAllTau/', async (req, res) => {
-    let { from, to, departureDate, arrivalDate, isOneWay, code } = req.query;
+    let { from, to, departureDate, arrivalDate, isOneWay, code } = req.body;
     let response = await getInforTicket(from, to, departureDate, arrivalDate, isOneWay, code);
     res.status(200).send(response);
 })
